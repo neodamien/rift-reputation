@@ -82,6 +82,11 @@ export async function GET(request) {
     const rankTier = soloQ
       ? `${soloQ.tier} ${soloQ.rank}`
       : 'UNRANKED'
+    const wins = soloQ?.wins ?? null
+    const losses = soloQ?.losses ?? null
+
+    console.log('WINS:', soloQ?.wins, 'LOSSES:', soloQ?.losses)
+    console.log('INSERT DATA:', { wins, losses, profile_icon_id: summoner.profileIconId })
 
     // 4. Créer le joueur dans la BDD
     const { data: newPlayer } = await supabase
@@ -92,6 +97,8 @@ export async function GET(request) {
         region,
         score: 1000000,
         rank_tier: rankTier,
+        wins,
+        losses,
         profile_icon_id: summoner.profileIconId,
       })
       .select()

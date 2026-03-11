@@ -21,22 +21,27 @@ function getTitles(score) {
   return [{ label: '🚫 Persona Non Grata', color: '#E05A4A' }]
 }
 
-export default function PlayerCard({ player, rank }) {
+export default function PlayerCard({ player, rank, onOpenSidebar }: { player: any, rank: number, onOpenSidebar?: (player: any) => void }) {
   const [showModal, setShowModal] = useState(false)
   const [currentScore, setCurrentScore] = useState(player.score)
   const [lastDelta, setLastDelta] = useState(player.score - 1000000)
   const [showToast, setShowToast] = useState(false)
+
   const [toastMsg, setToastMsg] = useState('')
 
   const titles = getTitles(currentScore)
   const scoreColor = getScoreColor(currentScore)
+  const iconUrl = player.profile_icon_id
+    ? `https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/${player.profile_icon_id}.png`
+    : null
 
   const handleVoteSuccess = (newScore, delta) => {
-    setCurrentScore(newScore)
-    setLastDelta(delta)
-    setToastMsg(`${delta >= 0 ? '+' : ''}${delta.toLocaleString('fr-FR')} pts`)
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 3000)
+  setCurrentScore(newScore)
+  setLastDelta(delta)
+  setToastMsg(`${delta >= 0 ? '+' : ''}${delta.toLocaleString('fr-FR')} pts`)
+  setShowToast(true)
+
+  setTimeout(() => setShowToast(false), 3000)
   }
 
   return (
@@ -76,6 +81,24 @@ export default function PlayerCard({ player, rank }) {
           color: 'var(--gold)', letterSpacing: '0.1em',
         }}>#{rank}</div>
 
+        {/* Sidebar button */}
+        {onOpenSidebar && (
+          <button
+            onClick={() => onOpenSidebar(player)}
+            title="Voir le profil"
+            style={{
+              position: 'absolute', top: '12px', left: '12px',
+              background: 'rgba(200,155,60,0.1)',
+              border: '1px solid #785A28',
+              color: '#C89B3C', fontSize: '13px',
+              width: '24px', height: '24px',
+              cursor: 'pointer', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              lineHeight: 1, zIndex: 2,
+            }}
+          >👤</button>
+        )}
+
         {/* Top row */}
         <div style={{ display: 'flex', gap: '14px', marginBottom: '16px' }}>
           <div style={{
@@ -85,9 +108,12 @@ export default function PlayerCard({ player, rank }) {
             borderRadius: '4px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontFamily: 'Cinzel, serif', fontSize: '22px', fontWeight: 900,
-            color: 'var(--gold)', flexShrink: 0,
+            color: 'var(--gold)', flexShrink: 0, overflow: 'hidden',
           }}>
-            {player.summoner_name[0].toUpperCase()}
+            {iconUrl
+              ? <img src={iconUrl} alt="" width={56} height={56} style={{ objectFit: 'cover' }} />
+              : player.summoner_name[0].toUpperCase()
+            }
           </div>
           <div>
             <div style={{
@@ -156,6 +182,8 @@ export default function PlayerCard({ player, rank }) {
             borderRadius: '2px', transition: 'width 0.6s ease',
           }} />
         </div>
+
+
 
         {/* Vote button */}
         <button onClick={() => setShowModal(true)} style={{
