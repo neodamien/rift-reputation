@@ -1,3 +1,5 @@
+import './globals.css'
+
 export const metadata = {
   title: 'Rift Reputation',
   description: 'League of Legends Community Tribunal',
@@ -5,8 +7,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr">
-      <body>{children}</body>
+    <html lang="fr" style={{ background: '#0A1428' }}>
+      <body style={{ background: '#0A1428', minHeight: '100vh' }}>
+        {children}
+      </body>
     </html>
   )
 }
