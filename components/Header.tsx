@@ -3,10 +3,10 @@ import { useState } from 'react'
 
 const REGIONS = ['Toutes', 'EUW', 'EUNE', 'NA', 'KR', 'BR', 'LAN']
 
-export default function Header({ onRegionChange }) {
+export default function Header({ onRegionChange }: { onRegionChange: (region: string | null) => void }) {
   const [activeRegion, setActiveRegion] = useState('Toutes')
 
-  const handleRegion = (region) => {
+  const handleRegion = (region: string) => {
     setActiveRegion(region)
     onRegionChange(region === 'Toutes' ? null : region)
   }

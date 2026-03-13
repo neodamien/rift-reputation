@@ -230,7 +230,7 @@ export default function PlayerSidebar({ player, onClose, onVoteSuccess }: { play
                   </span>
                   <span style={{
                     fontFamily: 'Cinzel, serif', fontSize: '18px',
-                    fontWeight: 900, color: winrate >= 50 ? '#28C87A' : '#E05A4A',
+                    fontWeight: 900, color: (winrate ?? 0) >= 50 ? '#28C87A' : '#E05A4A',
                   }}>
                     {winrate}%
                   </span>
@@ -241,8 +241,8 @@ export default function PlayerSidebar({ player, onClose, onVoteSuccess }: { play
                 <div style={{ height: '6px', background: '#1E3A5F', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{
                     height: '100%',
-                    width: `${winrate}%`,
-                    background: winrate >= 50
+                    width: `${winrate ?? 0}%`,
+                    background: (winrate ?? 0) >= 50
                       ? 'linear-gradient(90deg, #28C87A88, #28C87A)'
                       : 'linear-gradient(90deg, #E05A4A88, #E05A4A)',
                     transition: 'width 0.6s ease',

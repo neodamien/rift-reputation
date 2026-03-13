@@ -1,9 +1,9 @@
 import { supabase } from '@/lib/supabase'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-const RIOT_API_KEY = process.env.RIOT_API_KEY
+const RIOT_API_KEY = process.env.RIOT_API_KEY as string
 
-const REGION_MAP = {
+const REGION_MAP: Record<string, string> = {
   EUW: 'euw1',
   EUNE: 'eun1',
   NA: 'na1',
@@ -12,7 +12,7 @@ const REGION_MAP = {
   LAN: 'la1',
 }
 
-const ROUTING_MAP = {
+const ROUTING_MAP: Record<string, string> = {
   EUW: 'europe',
   EUNE: 'europe',
   NA: 'americas',
@@ -21,7 +21,7 @@ const ROUTING_MAP = {
   LAN: 'americas',
 }
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const name = searchParams.get('name')
   const tag = searchParams.get('tag')

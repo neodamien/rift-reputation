@@ -5,17 +5,17 @@ import {
   Tooltip, ResponsiveContainer, ReferenceLine
 } from 'recharts'
 
-function formatDate(dateStr) {
+function formatDate(dateStr: string) {
   const d = new Date(dateStr)
   return `${d.getDate()}/${d.getMonth() + 1} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`
 }
 
-function formatScore(score) {
+function formatScore(score: number) {
   if (score >= 1000000) return `${(score / 1000000).toFixed(2)}M`
   return score.toLocaleString('fr-FR')
 }
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean, payload?: any[], label?: string }) => {
   if (!active || !payload?.length) return null
   const score = payload[0].value
   const isPos = score >= 1000000
@@ -37,7 +37,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   )
 }
 
-export default function ScoreChart({ playerId, currentScore, refreshTrigger }) {
+export default function ScoreChart({ playerId, currentScore, refreshTrigger }: { playerId: string, currentScore: number, refreshTrigger: number }) {
   const [data, setData] = useState<{ date: string; score: number }[]>([])
   const [loading, setLoading] = useState(true)
   const currentScoreRef = useRef(currentScore)
