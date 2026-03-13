@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "search_placeholder": "Summoner name...",
+    "search_btn": "Search",
+    "all_regions": "All"
+  },
+  "sections": {
+    "this_week": "This Week",
+    "best": "Best",
+    "worst": "Worst",
+    "recently_judged": "Recently Judged",
+    "hall_of_fame": "Hall of Fame",
+    "hall_of_shame": "Hall of Shame",
+    "no_votes_week": "No votes this week",
+    "no_players": "No summoners in this region yet",
+    "players_count": "summoners"
+  },
+  "card": {
+    "score": "Community Score",
+    "evaluate": "Evaluate Player",
+    "discover": "Discover",
+    "judge": "Judge"
+  },
+  "sidebar": {
+    "winrate": "Ranked Winrate",
+    "unranked": "Unranked",
+    "vote_stats": "Vote Stats",
+    "last_votes": "Recent Votes",
+    "no_votes": "No votes for this player",
+    "evaluate": "Evaluate Player",
+    "behavior": "Behavior",
+    "skill": "Skills",
+    "comm": "Communication",
+    "punc": "Punctuality"
+  },
+  "modal": {
+    "tribunal": "Community Tribunal",
+    "judge": "Judge",
+    "current_score": "Current score",
+    "total_impact": "Total impact",
+    "cancel": "Cancel",
+    "submit": "Submit Judgment",
+    "submitting": "Submitting...",
+    "select_one": "Select at least one evaluation",
+    "behavior": "In-game Behavior",
+    "skill": "Skills / Level",
+    "comm": "Communication",
+    "punc": "Punctuality",
+    "options": {
+      "fair_play": "Exemplary fair-play",
+      "team_spirit": "Great team spirit",
+      "flame": "Regular flaming",
+      "toxic": "Toxic behavior",
+      "godlike": "Godlike mechanics",
+      "decent": "Decent player",
+      "grief": "In-game griefing",
+      "feed": "Intentional feeding",
+      "shotcall": "Effective shot-calling",
+      "synergy": "Excellent synergy",
+      "spam": "Spam /all chat",
+      "afk": "AFK / Disconnects",
+      "always_here": "Always present",
+      "reliable": "Reliable and consistent",
+      "ff15": "Abusive /ff15 votes",
+      "dodge": "Systematic dodging"
+    }
+  },
+  "titles": {
+    "legend": "Legend of the Rift",
+    "champion": "Community Champion",
+    "warrior": "Honored Warrior",
+    "fairplay": "Fair-Play",
+    "esteemed": "Esteemed",
+    "invoker": "Summoner",
+    "reported": "Reported",
+    "flamer": "Rank Flamer",
+    "banned": "Community Banned",
+    "persona": "Persona Non Grata"
+  }
+}

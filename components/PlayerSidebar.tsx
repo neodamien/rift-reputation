@@ -1,24 +1,38 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import VoteModal from './VoteModal'
+import { useIsMobile } from '../lib/useIsMobile'
 
-function getScoreColor(score) {
+function getScoreColor(score: number) {
   if (score >= 1100000) return '#28C87A'
   if (score >= 950000) return '#C89B3C'
   return '#E05A4A'
 }
 
-function getTitles(score) {
-  if (score >= 1400000) return [{ label: '👑 Légende de la Rift', color: '#C89B3C' }]
-  if (score >= 1200000) return [{ label: '🏆 Champion Communautaire', color: '#C89B3C' }]
-  if (score >= 1100000) return [{ label: '⚡ Guerrier Honoré', color: '#28C87A' }]
-  if (score >= 1050000) return [{ label: '🌟 Fair-Play', color: '#28C87A' }]
-  if (score >= 1010000) return [{ label: '👍 Estimé', color: '#28C87A' }]
-  if (score >= 990000) return [{ label: '⚔️ Invocateur', color: '#0BC4E3' }]
-  if (score >= 900000) return [{ label: '💀 Signalé', color: '#E05A4A' }]
-  if (score >= 800000) return [{ label: '🔥 Flambeur de Rang', color: '#E05A4A' }]
-  if (score >= 600000) return [{ label: '☠️ Banni de la Communauté', color: '#E05A4A' }]
-  return [{ label: '🚫 Persona Non Grata', color: '#E05A4A' }]
+const TITLE_EMOJIS: Record<string, string> = {
+  legend: '👑', champion: '🏆', warrior: '⚡', fairplay: '🌟',
+  esteemed: '👍', invoker: '⚔️', reported: '💀', flamer: '🔥',
+  banned: '☠️', persona: '🚫',
+}
+
+const TITLE_COLORS: Record<string, string> = {
+  legend: '#C89B3C', champion: '#C89B3C', warrior: '#28C87A', fairplay: '#28C87A',
+  esteemed: '#28C87A', invoker: '#0BC4E3', reported: '#E05A4A', flamer: '#E05A4A',
+  banned: '#E05A4A', persona: '#E05A4A',
+}
+
+function getTitleKey(score: number): string {
+  if (score >= 1400000) return 'legend'
+  if (score >= 1200000) return 'champion'
+  if (score >= 1100000) return 'warrior'
+  if (score >= 1050000) return 'fairplay'
+  if (score >= 1010000) return 'esteemed'
+  if (score >= 990000) return 'invoker'
+  if (score >= 900000) return 'reported'
+  if (score >= 800000) return 'flamer'
+  if (score >= 600000) return 'banned'
+  return 'persona'
 }
 
 function formatVoteDate(dateStr: string) {
@@ -40,7 +54,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function PlayerSidebar({ player, onClose }: { player: any, onClose: () => void }) {
+export default function PlayerSidebar({ player, onClose, onVoteSuccess }: { player: any, onClose: () => void, onVoteSuccess?: () => void }) {
+  const isMobile = useIsMobile()
+  const t = useTranslations()
   const [visible, setVisible] = useState(false)
   const [stats, setStats] = useState<any>(null)
   const [recentVotes, setRecentVotes] = useState<any[]>([])
@@ -70,10 +86,11 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
   const handleVoteSuccess = (newScore: number) => {
     setCurrentScore(newScore)
     setShowVoteModal(false)
-    fetchData()
+    onVoteSuccess?.()
+    handleClose()
   }
 
-  const titles = getTitles(currentScore)
+  const titleKey = getTitleKey(currentScore)
   const scoreColor = getScoreColor(currentScore)
   const iconUrl = player.profile_icon_id
     ? `https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/${player.profile_icon_id}.png`
@@ -85,10 +102,10 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
   const winrate = hasWinrate ? Math.round((wins / (wins + losses)) * 100) : null
 
   const statBars = stats ? [
-    { label: 'Comportement', value: stats.behavior_total },
-    { label: 'Compétences', value: stats.skill_total },
-    { label: 'Communication', value: stats.comm_total },
-    { label: 'Ponctualité', value: stats.punc_total },
+    { label: t('sidebar.behavior'), value: stats.behavior_total },
+    { label: t('sidebar.skill'), value: stats.skill_total },
+    { label: t('sidebar.comm'), value: stats.comm_total },
+    { label: t('sidebar.punc'), value: stats.punc_total },
   ] : []
   const maxAbs = Math.max(...statBars.map(s => Math.abs(s.value)), 1)
 
@@ -109,7 +126,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
       {/* Panel */}
       <div style={{
         position: 'fixed', top: 0, right: 0, bottom: 0,
-        width: '420px', zIndex: 900,
+        width: isMobile ? '100%' : '420px', zIndex: 900,
         background: '#0D1B2E',
         borderLeft: '1px solid #C89B3C',
         transform: visible ? 'translateX(0)' : 'translateX(100%)',
@@ -135,7 +152,6 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
           background: 'linear-gradient(135deg, rgba(200,155,60,0.06), transparent)',
           borderBottom: '1px solid #1E3A5F',
         }}>
-          {/* Avatar + nom */}
           <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', marginBottom: '16px' }}>
             <div style={{
               width: '64px', height: '64px', flexShrink: 0,
@@ -176,7 +192,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
             marginBottom: '12px',
           }}>
             <span style={{ fontSize: '11px', letterSpacing: '0.2em', color: '#A0B4C8', textTransform: 'uppercase' }}>
-              Score Communauté
+              {t('card.score')}
             </span>
             <span style={{
               fontFamily: 'Cinzel, serif', fontSize: '24px',
@@ -186,17 +202,17 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
             </span>
           </div>
 
-          {/* Titles */}
+          {/* Title */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-            {titles.map((t, i) => (
-              <span key={i} style={{
-                fontSize: '10px', fontWeight: 700,
-                letterSpacing: '0.08em', padding: '2px 8px',
-                border: `1px solid ${t.color}44`,
-                background: `${t.color}22`,
-                color: t.color, textTransform: 'uppercase',
-              }}>{t.label}</span>
-            ))}
+            <span style={{
+              fontSize: '10px', fontWeight: 700,
+              letterSpacing: '0.08em', padding: '2px 8px',
+              border: `1px solid ${TITLE_COLORS[titleKey]}44`,
+              background: `${TITLE_COLORS[titleKey]}22`,
+              color: TITLE_COLORS[titleKey], textTransform: 'uppercase',
+            }}>
+              {TITLE_EMOJIS[titleKey]} {t(`titles.${titleKey}` as any)}
+            </span>
           </div>
         </div>
 
@@ -204,7 +220,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
         <div style={{ padding: '20px 24px', flex: 1 }}>
 
           {/* Winrate */}
-          <SectionTitle>Winrate Ranked</SectionTitle>
+          <SectionTitle>{t('sidebar.winrate')}</SectionTitle>
           {hasWinrate ? (
             <>
               <div style={{ marginBottom: '8px' }}>
@@ -239,14 +255,14 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
               fontSize: '13px', color: '#A0B4C8',
               fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.08em',
               marginBottom: '4px',
-            }}>Non classé</div>
+            }}>{t('sidebar.unranked')}</div>
           )}
           <Divider />
 
           {/* Vote stats */}
           {stats && stats.vote_count > 0 && (
             <>
-              <SectionTitle>Stats votes ({stats.vote_count} total)</SectionTitle>
+              <SectionTitle>{t('sidebar.vote_stats')} ({stats.vote_count} total)</SectionTitle>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '4px' }}>
                 {statBars.map(({ label, value }) => {
                   const color = value >= 0 ? '#28C87A' : '#E05A4A'
@@ -287,7 +303,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
                 border: '1px solid #1E3A5F',
                 fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.1em',
               }}>
-                Aucun vote pour ce joueur
+                {t('sidebar.no_votes')}
               </div>
               <Divider />
             </>
@@ -296,7 +312,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
           {/* Recent votes */}
           {recentVotes.length > 0 && (
             <>
-              <SectionTitle>Derniers votes</SectionTitle>
+              <SectionTitle>{t('sidebar.last_votes')}</SectionTitle>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {recentVotes.map((v, i) => {
                   const pos = v.total_delta >= 0
@@ -340,7 +356,7 @@ export default function PlayerSidebar({ player, onClose }: { player: any, onClos
               clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
             }}
           >
-            ⚡ ÉVALUER CE JOUEUR
+            ⚡ {t('sidebar.evaluate').toUpperCase()}
           </button>
         </div>
       </div>

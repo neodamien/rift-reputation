@@ -5,9 +5,9 @@ export const metadata = {
   description: 'League of Legends Community Tribunal',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" style={{ background: '#0A1428' }}>
+    <html style={{ background: '#0A1428' }}>
       <body style={{ background: '#0A1428', minHeight: '100vh' }}>
         {children}
       </body>

@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "search_placeholder": "Nom d'invocateur...",
+    "search_btn": "Chercher",
+    "all_regions": "Toutes"
+  },
+  "sections": {
+    "this_week": "Cette semaine",
+    "best": "Meilleurs",
+    "worst": "Pires",
+    "recently_judged": "Récemment jugés",
+    "hall_of_fame": "Hall of Fame",
+    "hall_of_shame": "Hall of Shame",
+    "no_votes_week": "Aucun vote cette semaine",
+    "no_players": "Aucun invocateur dans cette région pour le moment",
+    "players_count": "invocateurs"
+  },
+  "card": {
+    "score": "Score Communauté",
+    "evaluate": "Évaluer ce joueur",
+    "discover": "Découvrir",
+    "judge": "Juger"
+  },
+  "sidebar": {
+    "winrate": "Winrate Ranked",
+    "unranked": "Non classé",
+    "vote_stats": "Stats votes",
+    "last_votes": "Derniers votes",
+    "no_votes": "Aucun vote pour ce joueur",
+    "evaluate": "Évaluer ce joueur",
+    "behavior": "Comportement",
+    "skill": "Compétences",
+    "comm": "Communication",
+    "punc": "Ponctualité"
+  },
+  "modal": {
+    "tribunal": "Tribunal Communautaire",
+    "judge": "Juger",
+    "current_score": "Score actuel",
+    "total_impact": "Impact total",
+    "cancel": "Annuler",
+    "submit": "Valider le jugement",
+    "submitting": "Envoi en cours...",
+    "select_one": "Sélectionnez au moins une évaluation",
+    "behavior": "Comportement en jeu",
+    "skill": "Compétences / Niveau",
+    "comm": "Communication",
+    "punc": "Ponctualité",
+    "options": {
+      "fair_play": "Fair-play exemplaire",
+      "team_spirit": "Bon esprit d'équipe",
+      "flame": "Flame régulier",
+      "toxic": "Comportement toxique",
+      "godlike": "Niveau godlike",
+      "decent": "Joueur compétent",
+      "grief": "Grief en jeu",
+      "feed": "Feed intentionnel",
+      "shotcall": "Shot-calling efficace",
+      "synergy": "Excellente synergie",
+      "spam": "Spam /all chat",
+      "afk": "AFK / Déco",
+      "always_here": "Toujours présent",
+      "reliable": "Fiable et régulier",
+      "ff15": "Vote /ff15 abusif",
+      "dodge": "Dodge systématique"
+    }
+  },
+  "titles": {
+    "legend": "Légende de la Rift",
+    "champion": "Champion Communautaire",
+    "warrior": "Guerrier Honoré",
+    "fairplay": "Fair-Play",
+    "esteemed": "Estimé",
+    "invoker": "Invocateur",
+    "reported": "Signalé",
+    "flamer": "Flambeur de Rang",
+    "banned": "Banni de la Communauté",
+    "persona": "Persona Non Grata"
+  }
+}

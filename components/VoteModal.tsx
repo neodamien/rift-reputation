@@ -1,55 +1,57 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
-const VOTE_OPTIONS = {
+const VOTE_STRUCTURE = {
   behavior: {
-    label: '🛡️ COMPORTEMENT EN JEU',
+    emoji: '🛡️',
     options: [
-      { value: 300, label: 'Fair-play exemplaire', points: '+300' },
-      { value: 150, label: "Bon esprit d'équipe", points: '+150' },
-      { value: -250, label: 'Flame régulier', points: '-250' },
-      { value: -400, label: 'Comportement toxique', points: '-400' },
+      { value: 300, key: 'fair_play', points: '+300' },
+      { value: 150, key: 'team_spirit', points: '+150' },
+      { value: -250, key: 'flame', points: '-250' },
+      { value: -400, key: 'toxic', points: '-400' },
     ]
   },
   skill: {
-    label: '⚔️ COMPÉTENCES / NIVEAU',
+    emoji: '⚔️',
     options: [
-      { value: 400, label: 'Niveau godlike', points: '+400' },
-      { value: 100, label: 'Joueur compétent', points: '+100' },
-      { value: -350, label: 'Grief en jeu', points: '-350' },
-      { value: -500, label: 'Feed intentionnel', points: '-500' },
+      { value: 400, key: 'godlike', points: '+400' },
+      { value: 100, key: 'decent', points: '+100' },
+      { value: -350, key: 'grief', points: '-350' },
+      { value: -500, key: 'feed', points: '-500' },
     ]
   },
   comm: {
-    label: '💬 COMMUNICATION',
+    emoji: '💬',
     options: [
-      { value: 200, label: 'Shot-calling efficace', points: '+200' },
-      { value: 150, label: 'Excellente synergie', points: '+150' },
-      { value: -150, label: 'Spam /all chat', points: '-150' },
-      { value: -300, label: 'AFK / Déco', points: '-300' },
+      { value: 200, key: 'shotcall', points: '+200' },
+      { value: 150, key: 'synergy', points: '+150' },
+      { value: -150, key: 'spam', points: '-150' },
+      { value: -300, key: 'afk', points: '-300' },
     ]
   },
   punc: {
-    label: '⏱️ PONCTUALITÉ',
+    emoji: '⏱️',
     options: [
-      { value: 100, label: 'Toujours présent', points: '+100' },
-      { value: 80, label: 'Fiable et régulier', points: '+80' },
-      { value: -120, label: 'Vote /ff15 abusif', points: '-120' },
-      { value: -200, label: 'Dodge systématique', points: '-200' },
+      { value: 100, key: 'always_here', points: '+100' },
+      { value: 80, key: 'reliable', points: '+80' },
+      { value: -120, key: 'ff15', points: '-120' },
+      { value: -200, key: 'dodge', points: '-200' },
     ]
   }
 }
 
-export default function VoteModal({ player, onClose, onVoteSuccess }) {
-  const [votes, setVotes] = useState({})
+export default function VoteModal({ player, onClose, onVoteSuccess }: { player: any, onClose: () => void, onVoteSuccess: (score: number, delta: number) => void }) {
+  const t = useTranslations('modal')
+  const [votes, setVotes] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const total = Object.values(votes).reduce((a: number, b: number) => a + b, 0)
+  const total = Object.values(votes).reduce((a, b) => a + b, 0)
   const isPos = total >= 0
 
   const submitVote = async () => {
-    if (Object.keys(votes).length === 0) { setError('Sélectionnez au moins une évaluation'); return }
+    if (Object.keys(votes).length === 0) { setError(t('select_one')); return }
     setLoading(true); setError('')
     const res = await fetch('/api/vote', {
       method: 'POST',
@@ -103,21 +105,21 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
             fontFamily: 'Cinzel, serif', fontSize: '11px',
             letterSpacing: '0.3em', color: '#0BC4E3',
             textTransform: 'uppercase', marginBottom: '6px',
-          }}>Tribunal Communautaire</div>
+          }}>{t('tribunal')}</div>
           <div style={{
             fontFamily: 'Cinzel, serif', fontSize: '22px',
             color: '#C89B3C', letterSpacing: '0.05em',
           }}>
-            Juger : <span style={{ color: '#F0E6D3' }}>{player.summoner_name}</span>
+            {t('judge')} : <span style={{ color: '#F0E6D3' }}>{player.summoner_name}</span>
           </div>
           <div style={{ fontSize: '13px', color: '#A0B4C8', marginTop: '4px' }}>
-            {player.region} · {player.rank_tier} · Score actuel : {player.score?.toLocaleString('fr-FR')} pts
+            {player.region} · {player.rank_tier} · {t('current_score')} : {player.score?.toLocaleString('fr-FR')} pts
           </div>
         </div>
 
         {/* Categories */}
         <div style={{ padding: '24px 32px' }}>
-          {Object.entries(VOTE_OPTIONS).map(([key, cat]) => (
+          {(Object.entries(VOTE_STRUCTURE) as [string, typeof VOTE_STRUCTURE[keyof typeof VOTE_STRUCTURE]][]).map(([key, cat]) => (
             <div key={key} style={{ marginBottom: '20px' }}>
               <div style={{
                 fontFamily: 'Cinzel, serif', fontSize: '12px',
@@ -126,7 +128,7 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
                 alignItems: 'center', gap: '8px',
               }}>
                 <div style={{ flex: 1, height: '1px', background: '#1E3A5F' }} />
-                {cat.label}
+                {cat.emoji} {t(key as any).toUpperCase()}
                 <div style={{ flex: 1, height: '1px', background: '#1E3A5F' }} />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
@@ -147,7 +149,7 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
                       clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)',
                       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     }}>
-                      <span>{opt.label}</span>
+                      <span>{t(`options.${opt.key}` as any)}</span>
                       <span style={{
                         fontSize: '12px', fontWeight: 700,
                         color: pos ? '#28C87A88' : '#E05A4A88',
@@ -169,7 +171,7 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
               margin: '8px 0',
             }}>
               <span style={{ color: '#A0B4C8', fontSize: '12px', letterSpacing: '0.2em', fontFamily: 'Cinzel, serif' }}>
-                IMPACT TOTAL
+                {t('total_impact').toUpperCase()}
               </span>
               <div style={{
                 fontFamily: 'Cinzel, serif', fontSize: '28px', fontWeight: 900,
@@ -203,7 +205,7 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
             padding: '13px', cursor: 'pointer',
             textTransform: 'uppercase',
             clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
-          }}>ANNULER</button>
+          }}>{t('cancel').toUpperCase()}</button>
           <button onClick={submitVote} disabled={loading} style={{
             flex: 2,
             background: loading ? '#785A28' : 'linear-gradient(135deg, #785A28, #C89B3C)',
@@ -215,7 +217,7 @@ export default function VoteModal({ player, onClose, onVoteSuccess }) {
             clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
             boxShadow: loading ? 'none' : '0 4px 20px rgba(200,155,60,0.3)',
           }}>
-            {loading ? 'ENVOI EN COURS...' : '⚡ VALIDER LE JUGEMENT'}
+            {loading ? t('submitting').toUpperCase() : `⚡ ${t('submit').toUpperCase()}`}
           </button>
         </div>
       </div>
