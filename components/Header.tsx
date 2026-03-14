@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 const REGIONS = ['Toutes', 'EUW', 'EUNE', 'NA', 'KR', 'BR', 'LAN']
 
@@ -70,6 +71,18 @@ export default function Header({ onRegionChange }: { onRegionChange: (region: st
             {region}
           </button>
         ))}
+      </div>
+      {/* Footer link */}
+      <div style={{ marginTop: '16px' }}>
+        <Link href="/legal" style={{
+          fontFamily: 'Rajdhani, sans-serif',
+          fontSize: '12px',
+          letterSpacing: '0.1em',
+          color: 'rgba(160,180,200,0.5)',
+          textDecoration: 'none',
+        }}>
+          Mentions légales
+        </Link>
       </div>
     </header>
   )

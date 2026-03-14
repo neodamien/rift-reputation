@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import LangSwitcher from '@/components/LangSwitcher'
+import CookieBanner from '@/components/CookieBanner'
 
 const locales = ['fr', 'en']
 
@@ -21,6 +22,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <LangSwitcher locale={locale} />
       {children}
+      <CookieBanner />
     </NextIntlClientProvider>
   )
 }

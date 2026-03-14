@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import Link from 'next/link'
 import PlayerCard from './PlayerCard'
 import PlayerSidebar from './PlayerSidebar'
 import SearchBar from './SearchBar'
@@ -108,6 +109,7 @@ export default function HubClient({ recentlyJudged, hallOfFame, hallOfShame, thi
   const router = useRouter()
   const isMobile = useIsMobile()
   const t = useTranslations()
+  const locale = useLocale()
   const [region, setRegion] = useState<string | null>(null)
   const [foundPlayer, setFoundPlayer] = useState<any>(null)
   const [sidebarPlayer, setSidebarPlayer] = useState<any>(null)
@@ -295,6 +297,24 @@ export default function HubClient({ recentlyJudged, hallOfFame, hallOfShame, thi
       {sidebarPlayer && (
         <PlayerSidebar player={sidebarPlayer} onClose={() => setSidebarPlayer(null)} onVoteSuccess={() => router.refresh()} />
       )}
+
+      <footer style={{
+        position: 'relative', zIndex: 10,
+        textAlign: 'center',
+        padding: '24px',
+        borderTop: '1px solid #1E3A5F',
+        marginTop: '16px',
+      }}>
+        <Link href={`/${locale}/legal`} style={{
+          fontFamily: 'Rajdhani, sans-serif',
+          fontSize: '12px',
+          letterSpacing: '0.1em',
+          color: 'rgba(160,180,200,0.4)',
+          textDecoration: 'none',
+        }}>
+          {t('footer.legal')}
+        </Link>
+      </footer>
     </main>
   )
 }

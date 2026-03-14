@@ -65,6 +65,35 @@
       "dodge": "Dodge systématique"
     }
   },
+  "footer": {
+    "legal": "Mentions légales"
+  },
+  "cookie": {
+    "message": "Ce site utilise Google Analytics pour mesurer l'audience. Aucune donnée personnelle identifiable n'est collectée.",
+    "accept": "Accepter",
+    "refuse": "Refuser"
+  },
+  "legal": {
+    "title": "Mentions Légales",
+    "editor_title": "Éditeur du site",
+    "editor_body": "Le site Rift Reputation est édité à titre personnel.",
+    "editor_name": "Éditeur : Damien (pseudonyme)",
+    "editor_contact": "Contact",
+    "hosting_title": "Hébergement",
+    "hosting_by": "Ce site est hébergé par :",
+    "data_title": "Données collectées",
+    "data_intro": "Ce site collecte les données suivantes :",
+    "data_analytics": "Analytics Google (anonymisés) : pages visitées, durée de session, pays de connexion. Aucune donnée personnelle identifiable n'est transmise à Google Analytics.",
+    "data_votes": "Votes : chaque vote est associé à l'adresse IP de l'utilisateur dans le seul but de limiter les abus (anti-double vote).",
+    "retention_title": "Durée de conservation",
+    "retention_votes": "Votes (IP) : 24 heures, à des fins anti-abus uniquement.",
+    "retention_analytics": "Données analytics : selon la politique de conservation de Google Analytics (par défaut 26 mois).",
+    "cookies_title": "Cookies",
+    "cookies_body": "Ce site peut déposer un cookie Google Analytics uniquement si vous avez donné votre consentement via la bannière affichée lors de votre première visite. Vous pouvez retirer votre consentement à tout moment en effaçant le localStorage de votre navigateur.",
+    "rights_title": "Droits des utilisateurs",
+    "rights_body": "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour exercer ces droits, contactez :",
+    "updated": "Dernière mise à jour : mars 2026"
+  },
   "titles": {
     "legend": "Légende de la Rift",
     "champion": "Champion Communautaire",

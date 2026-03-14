@@ -65,6 +65,35 @@
       "dodge": "Systematic dodging"
     }
   },
+  "footer": {
+    "legal": "Legal Notice"
+  },
+  "cookie": {
+    "message": "This site uses Google Analytics to measure audience. No personally identifiable data is collected.",
+    "accept": "Accept",
+    "refuse": "Decline"
+  },
+  "legal": {
+    "title": "Legal Notice",
+    "editor_title": "Site Publisher",
+    "editor_body": "The Rift Reputation site is published as a personal project.",
+    "editor_name": "Publisher: Damien (alias)",
+    "editor_contact": "Contact",
+    "hosting_title": "Hosting",
+    "hosting_by": "This site is hosted by:",
+    "data_title": "Data Collected",
+    "data_intro": "This site collects the following data:",
+    "data_analytics": "Google Analytics (anonymised): pages visited, session duration, country. No personally identifiable data is sent to Google Analytics.",
+    "data_votes": "Votes: each vote is linked to the user's IP address solely to prevent abuse (anti-duplicate vote).",
+    "retention_title": "Retention Period",
+    "retention_votes": "Votes (IP): 24 hours, for anti-abuse purposes only.",
+    "retention_analytics": "Analytics data: per Google Analytics retention policy (26 months by default).",
+    "cookies_title": "Cookies",
+    "cookies_body": "This site may place a Google Analytics cookie only if you have given consent via the banner shown on your first visit. You may withdraw consent at any time by clearing your browser's localStorage.",
+    "rights_title": "User Rights",
+    "rights_body": "Under the GDPR, you have the right to access, correct and delete data about you. To exercise these rights, contact:",
+    "updated": "Last updated: March 2026"
+  },
   "titles": {
     "legend": "Legend of the Rift",
     "champion": "Community Champion",
